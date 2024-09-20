@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">FirstTestApp</string>
+    <string name="login_placeholder">Пользователь</string>
+    <string name="password_placeholder">Пароль</string>
+    <string name="singin_button_label">Вход</string>
+    <string name="login_check_text">Успех</string>
+</resources>
