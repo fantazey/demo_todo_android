@@ -18,5 +18,21 @@
         android:id="@+id/homeMenuFragment"
         android:name="com.example.firsttestapp.HomeMenuFragment"
         android:label="fragment_home_menu"
-        tools:layout="@layout/fragment_home_menu" />
+        tools:layout="@layout/fragment_home_menu" >
+        <argument
+            android:name="username"
+            app:argType="string" />
+        <action
+            android:id="@+id/action_homeMenuFragment_to_tasksFragment"
+            app:destination="@id/tasksFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/tasksFragment"
+        android:name="com.example.firsttestapp.TasksFragment"
+        android:label="fragment_tasks"
+        tools:layout="@layout/fragment_tasks" >
+        <argument
+            android:name="username"
+            app:argType="string" />
+    </fragment>
 </navigation>

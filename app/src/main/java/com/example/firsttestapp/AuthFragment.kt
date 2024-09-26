@@ -18,11 +18,13 @@ class AuthFragment : Fragment() {
     ): View? {
         val view = inflater.inflate(R.layout.fragment_auth, container, false)
         val signInButton = view.findViewById<Button>(R.id.singin)
+
         signInButton.setOnClickListener {
             val login = view.findViewById<EditText>(R.id.login)
             val password = view.findViewById<EditText>(R.id.password)
-            if (password.text.toString() == "admin" && login.text.toString() == "admin") {
-                view.findNavController().navigate(R.id.action_success_login)
+            if (password.text.toString() ==  login.text.toString()) {
+                val action = AuthFragmentDirections.actionSuccessLogin(login.text.toString())
+                view.findNavController().navigate(action)
             } else {
                 val textView = view.findViewById<TextView>(R.id.result)
                 textView.visibility = View.VISIBLE
