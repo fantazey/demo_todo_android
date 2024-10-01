@@ -25,7 +25,7 @@ class AuthFragment : Fragment() {
         authViewModel = ViewModelProvider(this)[AuthViewModel::class.java]
 
         binding.singin.setOnClickListener {
-            if (authViewModel.authUser(binding.login.toString(), binding.password.toString())) {
+            if (authViewModel.authUser(binding.login.text.toString(), binding.password.text.toString())) {
                 val action = AuthFragmentDirections.actionSuccessLogin(authViewModel.username)
                 view.findNavController().navigate(action)
             } else {
