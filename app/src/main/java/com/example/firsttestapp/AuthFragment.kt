@@ -5,15 +5,14 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.EditText
-import android.widget.TextView
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 
 import com.example.firsttestapp.databinding.FragmentAuthBinding
 
 
 class AuthFragment : Fragment() {
+    lateinit var authViewModel: AuthViewModel
     private var _binding: FragmentAuthBinding? = null
     private val binding get() = _binding!!
 
@@ -23,16 +22,14 @@ class AuthFragment : Fragment() {
     ): View? {
         _binding = FragmentAuthBinding.inflate(inflater, container, false)
         val view = binding.root
-        val signInButton = binding.singin
-        signInButton.setOnClickListener {
-            val login = binding.login
-            val password = binding.password
-            if (password.text.toString() ==  login.text.toString()) {
-                val action = AuthFragmentDirections.actionSuccessLogin(login.text.toString())
+        authViewModel = ViewModelProvider(this)[AuthViewModel::class.java]
+
+        binding.singin.setOnClickListener {
+            if (authViewModel.authUser(binding.login.toString(), binding.password.toString())) {
+                val action = AuthFragmentDirections.actionSuccessLogin(authViewModel.username)
                 view.findNavController().navigate(action)
             } else {
-                val textView = binding.result
-                textView.visibility = View.VISIBLE
+                binding.result.visibility = View.VISIBLE
             }
         }
         return view
