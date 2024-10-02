@@ -9,6 +9,7 @@ import android.widget.TableLayout
 import android.widget.TextView
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.findNavController
 import com.example.firsttestapp.data.TaskViewModelFactory
 import com.example.firsttestapp.data.TodoDatabase
 import com.example.firsttestapp.data.view_model.TaskViewModel
@@ -38,13 +39,26 @@ class TasksFragment : Fragment() {
 
         val userNameLabel = view.findViewById<TextView>(R.id.fragment_tasks_username_label)
         userNameLabel.text = username
-        val adapter = TaskItemAdapter()
-        binding.taskList.adapter = adapter
+        val clickListener: (Int) -> Unit = { id ->
+            viewModel.loadCheckList(id)
+            viewModel.onTaskSelected(id)
+        }
+        val adapter = TaskItemAdapter(clickListener)
 
+        binding.taskList.adapter = adapter
         viewModel.tasks.observe(viewLifecycleOwner, Observer {
             it?.let {
                 adapter.data = it
             }
+        })
+
+        val navigate: (id: Int) -> Unit = { id ->
+            val action = TasksFragmentDirections.actionTasksFragmentToEditTaskFragment(username = username, taskId = id)
+            view.findNavController().navigate(action)
+            viewModel.onTaskNavigated()
+        }
+        viewModel.navigateToTask.observe(viewLifecycleOwner, Observer { taskId ->
+            taskId?.let(navigate)
         })
 
         return view

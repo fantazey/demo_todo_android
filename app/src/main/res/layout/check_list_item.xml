@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="item"
+            type="com.example.firsttestapp.data.model.CheckListItem" />
+    </data>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/check_listitem_card"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:padding="4dp"
+        app:cardCornerRadius="4dp"
+        app:cardElevation="4dp">
+
+        <LinearLayout
+            android:id="@+id/check_listitem_inner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="fill_horizontal"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/check_listitem_name_label"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:layout_marginEnd="10sp"
+                android:layout_marginHorizontal="10sp"
+                android:text="@string/check_list_item_check" />
+
+            <TextView
+                android:id="@+id/check_listitem_work"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginHorizontal="10sp"
+                android:gravity="center"
+                android:text="@{item.work}" />
+
+            <EditText
+                android:id="@+id/check_listitem_count"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginEnd="10sp"
+                android:layout_marginHorizontal="10sp"
+                android:text="@{String.valueOf(item.count)}" />
+
+            <TextView
+                android:id="@+id/check_listitem_unit"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginHorizontal="10sp"
+                android:gravity="center"
+                android:text="@{item.unit}" />
+        </LinearLayout>
+        <Button
+            android:id="@+id/check_listitem_save_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="end"
+            android:layout_marginEnd="10sp"
+            android:text="@string/check_listitem_save_button_label"
+            android:textSize="11sp" />
+    </androidx.cardview.widget.CardView>
+</layout>

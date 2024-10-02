@@ -1,38 +1,33 @@
 package com.example.firsttestapp
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
-import androidx.cardview.widget.CardView
+import android.widget.Button
 import androidx.recyclerview.widget.RecyclerView
 import com.example.firsttestapp.data.model.Task
+import com.example.firsttestapp.databinding.TaskItemBinding
 
-class TaskItemAdapter: RecyclerView.Adapter<TaskItemAdapter.TaskItemViewHolder>() {
+class TaskItemAdapter(val clickListener: (taskId: Int) -> Unit): RecyclerView.Adapter<TaskItemAdapter.TaskItemViewHolder>() {
     var data = listOf<Task>()
         set(value) {
             field = value
             notifyDataSetChanged()
         }
 
-    class TaskItemViewHolder(val rootView: CardView) : RecyclerView.ViewHolder(rootView) {
-        val taskName = rootView.findViewById<TextView>(R.id.task_item_name)
-        val taskPlace = rootView.findViewById<TextView>(R.id.task_item_place)
-        val taskAddress = rootView.findViewById<TextView>(R.id.task_item_address)
-        val taskActivity = rootView.findViewById<TextView>(R.id.task_item_activity)
+    class TaskItemViewHolder(val binding: TaskItemBinding) : RecyclerView.ViewHolder(binding.root) {
         companion object {
             fun inflateFrom(parent: ViewGroup): TaskItemViewHolder {
                 val layoutInflater = LayoutInflater.from(parent.context)
-                val view = layoutInflater.inflate(R.layout.task_item, parent, false) as CardView
-                return TaskItemViewHolder(view)
+                val binding = TaskItemBinding.inflate(layoutInflater, parent, false)
+                return TaskItemViewHolder(binding)
             }
         }
 
-        fun bind(item: Task) {
-            taskName.text = item.name
-            taskPlace.text = item.relatedPlace
-            taskAddress.text = item.address
-            taskActivity.text = item.activity.toString()
+        fun bind(item: Task, clickListener: (taskId: Int) -> Unit) {
+            binding.task = item
+            binding.root.findViewById<Button>(R.id.task_item_select_btn).setOnClickListener {
+                clickListener(item.taskId)
+            }
         }
     }
 
@@ -43,6 +38,6 @@ class TaskItemAdapter: RecyclerView.Adapter<TaskItemAdapter.TaskItemViewHolder>(
 
     override fun onBindViewHolder(holder: TaskItemViewHolder, position: Int) {
         val item = data[position]
-        holder.bind(item)
+        holder.bind(item, clickListener)
     }
 }

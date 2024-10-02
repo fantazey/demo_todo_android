@@ -11,4 +11,9 @@
     <string name="task_item_place_label">Точка расположения</string>
     <string name="task_item_address_label">Адрес</string>
     <string name="task_item_activity_label">Активность</string>
+    <string name="task_item_select_button_label">Выбрать</string>
+    <string name="check_list_item_check">Чек</string>
+    <string name="check_listitem_save_button_label">Сохранить</string>
+
+
 </resources>

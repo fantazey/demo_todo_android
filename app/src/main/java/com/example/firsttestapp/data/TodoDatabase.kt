@@ -1,6 +1,7 @@
 package com.example.firsttestapp.data
 
 import android.content.Context
+import androidx.room.AutoMigration
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
@@ -9,7 +10,10 @@ import com.example.firsttestapp.data.model.CheckListItem
 import com.example.firsttestapp.data.model.Task
 import com.example.firsttestapp.data.model.TaskCheckList
 
-@Database(entities = [Task::class, TaskCheckList::class, CheckListItem::class], version = 1, exportSchema = false)
+@Database(
+    entities = [Task::class, TaskCheckList::class, CheckListItem::class],
+    version = 2,
+    exportSchema = false)
 abstract class TodoDatabase: RoomDatabase() {
     abstract val taskDao: TaskDao
 
@@ -20,7 +24,9 @@ abstract class TodoDatabase: RoomDatabase() {
             synchronized(this) {
                 var instance = INSTANCE
                 if (instance == null) {
-                    instance = Room.databaseBuilder(context.applicationContext, TodoDatabase::class.java, "todo_database").build()
+                    instance = Room.databaseBuilder(context.applicationContext, TodoDatabase::class.java, "todo_database")
+                        .fallbackToDestructiveMigration()
+                        .build()
                     INSTANCE = instance
                 }
                 return instance
